@@ -1,11 +1,30 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  # before do
+  #   @task = FactoryBot.create(:task, title: 'task')
+  # end
+  before do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
-        task = FactoryBot.create(:task, title: 'task')
+        # task = FactoryBot.create(:task, title: 'task')
         visit tasks_path
-        expect(page).to have_content 'task'
+        expect(page).to have_content 'タスク１'
+      end
+    end
+    context '複数のタスクを作成した場合' do
+      it 'タスクが作成日時の降順に並んでいる' do
+        # あらかじめタスク並び替えの確認テストで使用するためのタスクを二つ作成する
+        # （上記と全く同じ記述が繰り返されてしまう！）
+        # task = FactoryBot.create(:task, title: 'task')
+        # new_task = FactoryBot.create(:task, title: "new_task")
+        visit tasks_path
+        task_list = all('#task_row')# タスク一覧を配列として取得するため、View側でidを振っておく
+        expect(task_list[0]).to have_content 'タスク２'
+        expect(task_list[1]).to have_content 'タスク１'
       end
     end
   end
@@ -13,8 +32,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存される' do
         visit new_task_path
-        fill_in 'Title', with: 'hello'
-        fill_in 'Content', with: 'my name is fujimoto.'
+        fill_in 'タイトル', with: 'hello'
+        fill_in '内容', with: 'my name is fujimoto.'
         click_on 'button'
         expect(page).to have_content 'my name is fujimoto.'
       end
