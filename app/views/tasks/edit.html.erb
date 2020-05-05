@@ -1,4 +1,4 @@
-<h1>タスク新規作成</h1>
+<h1>タスク編集</h1>
 <%= form_with(model: @task, local: true) do |form| %>
 <% if @task.errors.any? %>
     <div id="error_explanation">
@@ -18,5 +18,5 @@
     <%= form.label :content %>
     <%= form.text_field :content %>
   </div>
-  <%= form.submit '新規作成' %>
+  <%= form.submit '編集' %>
 <% end %>
