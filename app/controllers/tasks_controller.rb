@@ -13,11 +13,11 @@ class TasksController < ApplicationController
       redirect_to tasks_path, notice: 'タスク作成しました！'
     else
       render :new
-    end 
+    end
   end
 
   def show
-
+    @task = Task.find(params[:id])
   end
 
   def edit
@@ -35,4 +35,5 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :content)
   end
+
 end
