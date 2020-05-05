@@ -23,5 +23,7 @@ module TodoApp
                        request_specs: false
     end
 >>>>>>> 44d01eae165e76a568b7f878eae8d47cabf644d7
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
   end
 end
