@@ -6,6 +6,13 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
+
+    # if params[:search].present?
+    #   @tasks = Task.where("title LIKE ?", "%#{ params[:title] }%")
+    # else
+    #   @tasks = Task.all
+    # end
+
   end
 
   def new
@@ -41,7 +48,7 @@ class TasksController < ApplicationController
   end
   private
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :status)
   end
 
   def set_task
