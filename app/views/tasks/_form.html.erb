@@ -17,6 +17,10 @@
     <%= form.label :content %>
     <%= form.text_field :content %>
   </div>
-  <%= form.submit 'button' %>
+  <div class="task_deadline">
+    <%= form.label :deadline %>
+    <%= form.date_field :deadline %>
+  </div>
+  <%= form.submit %>
 <% end %>
 <%= link_to '一覧画面', tasks_path %>
