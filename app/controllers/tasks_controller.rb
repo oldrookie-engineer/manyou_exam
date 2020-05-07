@@ -6,15 +6,15 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
-binding.pry
-    if params[:task][:search].present?
-      if params[:task][:title].present? && params[:task][:status].present?
-        @tasks = Task.where("title Like ?", "%#{params[:task][:title]}%")
-        # @tasks = @tasks.where(status: params[:task][:status])
-      elsif params[:task][:title].present?
-        @tasks = Task.where("title Like ?", "%#{params[:task][:title]}%")
-      elsif params[:task][:status].present?
-        @tasks = Task.where(status: params[:task][:status])
+
+    if params[:search].present?
+      if params[:title].present? && params[:status].present?
+        @tasks = Task.where("title Like ?", "%#{params[:title]}%")
+        .where(status: params[:status])
+      elsif params[:title].present?
+        @tasks = Task.where("title Like ?", "%#{params[:title]}%")
+      elsif params[:status].present?
+        @tasks = Task.status_like
       else
         @tasks = Task.all.order(deadline: :asc)
       end
