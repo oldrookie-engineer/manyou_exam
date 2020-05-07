@@ -6,13 +6,21 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
-
-    # if params[:search].present?
-    #   @tasks = Task.where("title LIKE ?", "%#{ params[:title] }%")
-    # else
-    #   @tasks = Task.all
-    # end
-
+binding.pry
+    if params[:task][:search].present?
+      if params[:task][:title].present? && params[:task][:status].present?
+        @tasks = Task.where("title Like ?", "%#{params[:task][:title]}%")
+        # @tasks = @tasks.where(status: params[:task][:status])
+      elsif params[:task][:title].present?
+        @tasks = Task.where("title Like ?", "%#{params[:task][:title]}%")
+      elsif params[:task][:status].present?
+        @tasks = Task.where(status: params[:task][:status])
+      else
+        @tasks = Task.all.order(deadline: :asc)
+      end
+    else
+      @tasks = Task.all.order(deadline: :asc)
+    end
   end
 
   def new
@@ -46,6 +54,7 @@ class TasksController < ApplicationController
     @task.destroy
     redirect_to tasks_path, notice: 'タスクを削除しました！'
   end
+
   private
   def task_params
     params.require(:task).permit(:title, :content, :deadline, :status)
