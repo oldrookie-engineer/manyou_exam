@@ -10,13 +10,26 @@ RSpec.describe 'タスク管理機能', type: :model do
   end
   it 'titleとcontentに内容が記載されていればバリデーションが通る' do
     task = Task.new(title: '成功', content: 'テスト成功')
-    expect(task).to be_valid  end
-context 'scopeメソッドで検索した場合' do
-  before do
-    Task.create(title: "task", content: "sample_task")
-    Task.create(title: "sample", content: "sample_sample")
+    expect(task).to be_valid
   end
-  it "scopeメソッドでタイトル検索ができる"
-  expect(Task.title_search('task').count).to eq 1
 end
+
+RSpec.describe 'タスク検索機能', type: :model do
+  context 'scopeメソッドで検索をした場合' do
+    before do
+      Task.create(title: "task", content: "sample", status: "未着手")
+      Task.create(title: "task", content: "sample", status: "未着手")
+      Task.create(title: "task", content: "sample_sample", status: "着手中")
+      Task.create(title: "task", content: "sample_sample_sample", status: "完了")
+    end
+    it "scopeメソッドでタイトル検索ができる" do
+      expect(Task.title_search("task").count).to eq 4
+    end
+    it "scopeメソッドでステータス検索ができる" do
+      expect(Task.status_search("未着手").count).to eq 2
+    end
+    it "scopeメソッドでタイトルとステータスの両方が検索できる" do
+      expect(Task.title_search("task") && Task.status_search("未着手").count).to eq 2
+    end
+  end
 end
