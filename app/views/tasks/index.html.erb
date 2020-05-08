@@ -1,7 +1,7 @@
 <h1>タスク一覧</h1>
 <%= form_with(model: @task, local: true, url: tasks_path, method: :get) do |form|  %>
     <%= form.label :title_search, :タイトル検索 %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title_search %>
     <%= form.label :status_search, :状態検索 %>
     <%= form.select :status, [[""],["未着手"],["着手中"],["完了"]] %>
     <%= form.hidden_field :search, value: 'true' %>
