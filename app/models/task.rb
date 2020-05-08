@@ -1,5 +1,9 @@
 class Task < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
-  scope :status_like, -> (params) {where(status: params[:status])}
+  scope :deadline_order, -> { order(deadline: :asc) }
+  scope :title_search, -> (title) {
+    where("title Like ?", title)
+  }
+  scope :status_search, -> (status) { where(status: status)}
 end
