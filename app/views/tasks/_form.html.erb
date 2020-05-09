@@ -19,11 +19,15 @@
   </div>
   <div class="task_deadline">
     <%= form.label :deadline %>
-    <%= form.date_field :deadline %>
+    <%= form.date_select :deadline %>
   </div>
   <div class="task_status">
-    <%= form.label :状態 %>
+    <%= form.label :status %>
     <%= form.select :status, [["未着手"],["着手中"],["完了"]] %>
+  </div>
+  <div class="task_priority">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %>
   </div>
   <%= form.submit %>
 <% end %>

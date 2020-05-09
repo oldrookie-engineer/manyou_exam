@@ -34,8 +34,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'タイトル', with: 'hello'
         fill_in '内容', with: 'my name is fujimoto.'
+        # fill_in '終了期限', with: '2020.5.8'
+        # select '2020.5.8', from: deadline
+        select '未着手', from: status
+        fill_in '優先順位', with: '高'
         click_on '登録する'
         expect(page).to have_content 'my name is fujimoto.'
+        expect(page).to have_content '未着手'
+        expect(page).to have_content '高'
+        # expect(page).to have_content '2020.5.8'
       end
     end
   end
@@ -62,7 +69,7 @@ RSpec.describe 'タスク検索機能', type: :system do
     it "タイトルで検索できる" do
       visit tasks_path
       # タスクの検索欄に検索ワードを入力する (例: task)
-      fill_in 'title_search', with: 'タスク２'
+      fill_in 'title', with: 'タスク２'
       # 検索ボタンを押す
       click_on '検索'
       expect(page).to have_content 'hello'
@@ -78,7 +85,7 @@ RSpec.describe 'タスク検索機能', type: :system do
     it "タイトルとステータスで検索できる" do
       visit tasks_path
       # タスクの検索欄に検索ワードを入力する (例: task)
-      fill_in 'title_search', with: 'タスク３'
+      fill_in 'title', with: 'タスク３'
       select '完了', from: status
       # 検索ボタンを押す
       click_on '検索'
