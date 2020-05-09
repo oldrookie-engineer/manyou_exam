@@ -1,4 +1,12 @@
 <h1>タスク詳細</h1>
-<p>タイトル: <%= @task.title %></p>
-<p>内容: <%= @task.content %></p>
-<%= link_to '一覧画面', tasks_path %>
+<dt>タイトル</dt>
+<dd><%= @task.title %></dd>
+<dt>内容</dt>
+  <dd><%= @task.content %></dd>
+  <dt>終了期限</dt>
+  <dd><%= @task.timelimit %></dd>
+  <dt>状態</dt>
+  <dd><%= @task.status %></dd>
+  <dt>優先順位</dt>
+  <dd><%= @task.priority %></dd>
+<%= link_to '一覧画面', tasks_path, class: 'btn btn-primary' %>

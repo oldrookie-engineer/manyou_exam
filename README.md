@@ -21,7 +21,7 @@
         * user_id(FK)
         * title: string
         * content: string
-        * deadline: date
+        * timelimit: date
         * priority: integer
         * status: string
 
