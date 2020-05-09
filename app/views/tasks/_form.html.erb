@@ -9,26 +9,28 @@
       </ul>
     </div>
   <% end %>
+  <dl>
   <div class="task_title">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+    <dt><%= form.label :title %></dt>
+    <dd><%= form.text_field :title %></dd>
   </div>
   <div class="task_content">
-    <%= form.label :content %>
-    <%= form.text_field :content %>
+    <dt><%= form.label :content %></dt>
+    <dd><%= form.text_area :content, size: "30x5" %></dd>
   </div>
   <div class="task_timelimit">
-    <%= form.label :timelimit %>
-    <%= form.date_select :timelimit %>
+    <dt><%= form.label :timelimit %></dt>
+    <dd><%= form.date_select :timelimit %></dd>
   </div>
   <div class="task_status">
-    <%= form.label :status %>
-    <%= form.select :status, [["未着手"],["着手中"],["完了"]] %>
+    <dt><%= form.label :status %></dt>
+    <dd><%= form.select :status, [["未着手"],["着手中"],["完了"]] %></dd>
   </div>
   <div class="task_priority">
-    <%= form.label :priority %>
-    <%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %>
+    <dt><%= form.label :priority %></dt>
+    <dd><%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %></dd>
   </div>
+  </dl>
   <%= form.submit %>
 <% end %>
-<%= link_to '一覧画面', tasks_path %>
+<%= link_to '一覧画面', tasks_path, class: 'btn btn-primary' %>
