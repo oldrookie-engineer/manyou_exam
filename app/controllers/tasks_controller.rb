@@ -3,11 +3,11 @@ class TasksController < ApplicationController
   def index
     # 終了期限順・優先順位順にソートするコード
     if params[:sort_deadline]
-      @tasks = Task.all.deadline_order
+      @tasks = Task.all.page(params[:page]).per(5).deadline_order
     elsif params[:sort_priority]
-      @tasks = Task.all.order(priority: :asc)
+      @tasks = Task.all.page(params[:page]).per(5).order(priority: :asc)
     else
-      @tasks = Task.all
+      @tasks = Task.all.page(params[:page]).per(5)
     end
 
     # ----- 検索機能のコード -----
@@ -16,12 +16,15 @@ class TasksController < ApplicationController
       if params[:title].present? && params[:status].present?
         @tasks = Task.title_search(params[:title])
         .status_search(params[:status])
+        @tasks = @tasks.page(params[:page]).per(5)
       # ----- タイトルの検索 -----
       elsif params[:title].present?
         @tasks = Task.title_search(params[:title])
+        @tasks = @tasks.page(params[:page]).per(5)
       # ----- ステータスの検索 -----
       elsif params[:status].present?
         @tasks = Task.status_search(params[:status])
+        @tasks = @tasks.page(params[:page]).per(5)
       # else
       #   @tasks = Task.all
       end
