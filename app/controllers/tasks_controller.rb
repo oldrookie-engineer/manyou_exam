@@ -2,8 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
     # 終了期限順・優先順位順にソートするコード
-    if params[:sort_deadline]
-      @tasks = Task.all.page(params[:page]).per(5).deadline_order
+    if params[:sort_timelimit]
+      @tasks = Task.all.page(params[:page]).per(5).timelimit_order
     elsif params[:sort_priority]
       @tasks = Task.all.page(params[:page]).per(5).order(priority: :asc)
     else
@@ -67,7 +67,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
+    params.require(:task).permit(:title, :content, :timelimit, :status, :priority)
   end
 
   def set_task

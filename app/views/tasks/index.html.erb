@@ -4,8 +4,6 @@
     <%= form.text_field :title %>
     <%= form.label :status, :状態検索 %>
     <%= form.select :status, [[""],["未着手"],["着手中"],["完了"]] %>
-    <%= form.label :priority, :優先順位 %>
-    <%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %>
     <%= form.hidden_field :search, value: 'true' %>
     <%= form.submit '検索' %>
 <% end %>
@@ -22,7 +20,7 @@
   <tr>
     <td id="task_row"><%= task.title %></td>
     <td><%= task.content %></td>
-    <td><%= task.deadline %></td>
+    <td id="task_limit"><%= task.timelimit %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
     <td><%= link_to '詳細', task_path(task.id) %></td>
@@ -33,5 +31,5 @@
 </table>
 <%= paginate @tasks %>
 <%= link_to '新規作成', new_task_path %>
-<%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %>
+<%= link_to "終了期限でソートする", tasks_path(sort_timelimit: "true") %>
 <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
