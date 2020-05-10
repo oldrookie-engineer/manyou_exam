@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user, only: [:index]
   def index
     # 終了期限順・優先順位順にソートするコード
     if params[:sort_timelimit]
@@ -31,6 +32,11 @@ class TasksController < ApplicationController
     # else
     #   @tasks = Task.all
     end
+
+    # ----- 自分が作成したタスクだけを表示する -----
+    if session[:user_id] == current_user.id
+      @tasks = current_user.tasks.page(params[:page]).per(5)
+    end
   end
 
   def new
@@ -39,6 +45,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to task_path(@task.id), notice: 'タスク作成しました！'
     else
