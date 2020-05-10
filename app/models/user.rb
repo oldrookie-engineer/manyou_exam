@@ -2,6 +2,6 @@ class User < ApplicationRecord
   validates :name, presence:true
   validates :email, presence:true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   has_secure_password
-  validates :password, presence:true
+  validates :password, presence:true, unless: :password_digest
   has_many :tasks
 end

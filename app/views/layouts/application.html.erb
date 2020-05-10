@@ -14,11 +14,14 @@
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>
     <% if logged_in? %>
-    <%= link_to "プロフィール", user_path(current_user.id) %>
-    <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+      <%= link_to "プロフィール", user_path(current_user.id) %>
+      <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+      <%if current_user.admin?%>
+        <%= link_to 'ユーザー一覧(管理者用)' ,admin_users_path %>
+      <% end %>
     <% else %>
-    <%= link_to "ユーザー登録", new_user_path %>
-    <%= link_to "ログイン", new_session_path %>
+      <%= link_to "ユーザー登録", new_user_path %>
+      <%= link_to "ログイン", new_session_path %>
     <% end %>
     <div class="main">
       <%= yield %>
