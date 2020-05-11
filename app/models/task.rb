@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   scope :timelimit_order, -> { order(timelimit: :asc) }
+  scope :priority_order, -> { order(priority: :asc) }
   scope :title_search, -> (title) {
     where("title Like ?", title)
   }

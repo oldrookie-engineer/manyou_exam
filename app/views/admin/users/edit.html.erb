@@ -9,5 +9,7 @@
   <%= f.hidden_field :password %>
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
+  <%= f.label :管理者権限 %>
+  <%= f.check_box :admin %>
   <%= f.submit %>
 <% end %><%= link_to '一覧画面', admin_users_path  %>

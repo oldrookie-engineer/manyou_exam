@@ -5,7 +5,7 @@
 # )
 
 User.create!(
-  name: "管理者",
+  name: "master",
   email: "1234@abcd.com",
   password: "yohei",
   password_confirmation: "yohei",

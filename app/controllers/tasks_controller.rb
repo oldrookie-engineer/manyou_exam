@@ -1,21 +1,24 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user, only: [:index, :new]
+
   def index
     # 終了期限順・優先順位順にソートするコード
+    # binding.pry
     if params[:sort_timelimit]
-      @tasks = current_user.tasks.page(params[:page]).per(5).timelimit_order
+      @tasks =  current_user.tasks.page(params[:page]).per(5).timelimit_order
     elsif params[:sort_priority]
-      @tasks = current_user.tasks.page(params[:page]).per(5).order(priority: :asc)
+      @tasks = current_user.tasks.page(params[:page]).per(5).priority_order
     else
       @tasks = current_user.tasks.page(params[:page]).per(5)
     end
 
     # ----- 検索機能のコード -----
+    # binding.pry
     if params[:search].present?
       # ----- タイトルとステータスの検索 -----
       if params[:title].present? && params[:status].present?
-        @tasks = Task.title_search(params[:title])
+        @tasks = current_user.tasks.title_search(params[:title])
         .status_search(params[:status])
         @tasks = @tasks.page(params[:page]).per(5)
       # ----- タイトルの検索 -----
@@ -25,7 +28,7 @@ class TasksController < ApplicationController
         @tasks = @tasks.page(params[:page]).per(5)
       # ----- ステータスの検索 -----
       elsif params[:status].present?
-        @tasks = Task.status_search(params[:status])
+        @tasks = current_user.tasks.status_search(params[:status])
         @tasks = @tasks.page(params[:page]).per(5)
       # else
       #   @tasks = Task.all

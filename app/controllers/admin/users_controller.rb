@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
 
 
   def index
-      @users = User.all
+      @users = User.all.includes(:tasks)
   end
 
   def new
@@ -45,7 +45,7 @@ class Admin::UsersController < ApplicationController
 
   private
   def admin_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
 
   def user_admin
