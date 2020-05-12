@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence:true, unless: :password_digest
   before_destroy :admin_destroy_check
-  before_update :admin_update_check
+  after_update :admin_update_check
   has_many :tasks, dependent: :destroy
 
   def admin_destroy_check
@@ -14,9 +14,8 @@ class User < ApplicationRecord
   end
 
   def admin_update_check
-    if User.where(admin: true).count <= 1 && self.admin == false
-      throw(:abort)
+    if User.where(admin: true).count == 0
+      raise ActiveRecord::RecordInvalid, self
     end
   end
-
 end

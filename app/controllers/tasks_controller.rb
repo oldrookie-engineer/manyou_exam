@@ -4,42 +4,35 @@ class TasksController < ApplicationController
 
   def index
     # 終了期限順・優先順位順にソートするコード
-    # binding.pry
-    if params[:sort_timelimit]
-      @tasks =  current_user.tasks.page(params[:page]).per(5).timelimit_order
-    elsif params[:sort_priority]
-      @tasks = current_user.tasks.page(params[:page]).per(5).priority_order
-    else
-      @tasks = current_user.tasks.page(params[:page]).per(5)
+    if current_user.present?
+      if params[:sort_timelimit]
+        @tasks = current_user.tasks.timelimit_order.page(params[:page]).per(5)
+      elsif params[:sort_priority]
+        @tasks = current_user.tasks.priority_order.page(params[:page]).per(5)
+      else
+        @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
+      end
     end
 
     # ----- 検索機能のコード -----
-    # binding.pry
-    if params[:search].present?
-      # ----- タイトルとステータスの検索 -----
-      if params[:title].present? && params[:status].present?
-        @tasks = current_user.tasks.title_search(params[:title])
-        .status_search(params[:status])
-        @tasks = @tasks.page(params[:page]).per(5)
-      # ----- タイトルの検索 -----
-    elsif params[:title].present?
-        # binding.pry
-        @tasks = current_user.tasks.title_search(params[:title])
-        @tasks = @tasks.page(params[:page]).per(5)
-      # ----- ステータスの検索 -----
-      elsif params[:status].present?
-        @tasks = current_user.tasks.status_search(params[:status])
-        @tasks = @tasks.page(params[:page]).per(5)
-      # else
-      #   @tasks = Task.all
+    if current_user.present?
+      if params[:search].present?
+        # ----- タイトルとステータスの検索 -----
+        if params[:title].present? && params[:status].present?
+          @tasks = current_user.tasks.title_search(params[:title])
+          .status_search(params[:status])
+          @tasks = @tasks.page(params[:page]).per(5)
+        # ----- タイトルの検索 -----
+        elsif params[:title].present?
+          # binding.pry
+          @tasks = current_user.tasks.title_search(params[:title])
+          @tasks = @tasks.page(params[:page]).per(5)
+        # ----- ステータスの検索 -----
+        elsif params[:status].present?
+          @tasks = current_user.tasks.status_search(params[:status])
+          @tasks = @tasks.page(params[:page]).per(5)
+        end
       end
-    # else
-    #   @tasks = Task.all
-    end
-
-    # ----- 自分が作成したタスクだけを表示する -----
-    if session[:user_id] == current_user.id
-      @tasks = current_user.tasks.page(params[:page]).per(5)
     end
   end
 

@@ -4,15 +4,20 @@ RSpec.describe 'タスク管理機能', type: :system do
   #   @task = FactoryBot.create(:task, title: 'task')
   # end
   before do
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
+    @user = FactoryBot.create(:user)
+    @task = FactoryBot.create(:task, user: @user)
+    @second_task = FactoryBot.create(:second_task, user: @user)
+    visit new_session_path
+    fill_in 'session[email]', with: @user.email
+    fill_in 'session[password]', with: @user.password
+    click_on 'ログインする'
   end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
         # task = FactoryBot.create(:task, title: 'task')
         visit tasks_path
-        expect(page).to have_content 'タスク１'
+        expect(page).to have_content @task.title
       end
     end
     context '複数のタスクを作成した場合' do
@@ -23,14 +28,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         # new_task = FactoryBot.create(:task, title: "new_task")
         visit tasks_path
         task_list = all('#task_row')# タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'タスク２'
-        expect(task_list[1]).to have_content 'タスク１'
+        expect(task_list[0]).to have_content 'タスク１'
+        expect(task_list[1]).to have_content 'タスク２'
       end
     end
     context '終了期限でソートした場合' do
       it 'タスクが終了期限順に並んでいる' do
         visit tasks_path
         click_on '終了期限でソートする'
+        sleep 1.0
         task_limit = all('#task_limit')
         expect(task_limit[0]).to have_content '2020-05-09'
         expect(task_limit[1]).to have_content '2020-05-10'
@@ -58,9 +64,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
-       before do
-         @task = Task.create!(title: 'hello', content:'my name is fujimoto.')
-       end
+       # before do
+       #   @task = Task.create!(title: 'hello', content:'my name is fujimoto.')
+       # end
        it '該当タスクの内容が表示されたページに遷移する' do
          visit task_path(@task)
          expect(page).to have_content @task.title
@@ -70,36 +76,50 @@ RSpec.describe 'タスク管理機能', type: :system do
 end
 
 RSpec.describe 'タスク検索機能', type: :system do
+  before do
+    @user = FactoryBot.create(:user)
+    @task = FactoryBot.create(:task, user: @user)
+    visit new_session_path
+    fill_in 'session[email]', with: @user.email
+    fill_in 'session[password]', with: @user.password
+    click_on 'ログインする'
+  end
   context '検索をした場合' do
-    before do
-      FactoryBot.create(:task)
-      FactoryBot.create(:second_task)
-      FactoryBot.create(:third_task)
-    end
+    # before do
+    #   FactoryBot.create(:task)
+    #   FactoryBot.create(:second_task)
+    #   FactoryBot.create(:third_task)
+    # end
     it "タイトルで検索できる" do
       visit tasks_path
       # タスクの検索欄に検索ワードを入力する (例: task)
-      fill_in 'title', with: 'タスク２'
+      fill_in 'title', with: @task.title
+      # fill_in 'title', with: 'タスク２'
       # 検索ボタンを押す
       click_on '検索'
-      expect(page).to have_content 'hello'
+      expect(page).to have_content @task.title
     end
     it "ステータスで検索できる" do
       visit tasks_path
       # タスクの検索欄に検索ワードを入力する (例: task)
-      select '着手中', from: status
+      select @task.status, from: status
+      # select '着手中', from: status
       # 検索ボタンを押す
       click_on '検索'
-      expect(page).to have_content 'good-bye'
+      expect(page).to have_content @task.title
+      # expect(page).to have_content 'good-bye'
     end
     it "タイトルとステータスで検索できる" do
       visit tasks_path
       # タスクの検索欄に検索ワードを入力する (例: task)
-      fill_in 'title', with: 'タスク３'
-      select '完了', from: status
+      fill_in 'title', with: @task.title
+      # fill_in 'title', with: 'タスク３'
+      select @task.status, from: status
+      # select '完了', from: status
       # 検索ボタンを押す
       click_on '検索'
-      expect(page).to have_content 'good-morning'
+      expect(page).to have_content @task.title
+      # expect(page).to have_content 'good-morning'
     end
   end
 end

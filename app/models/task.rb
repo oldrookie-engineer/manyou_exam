@@ -4,7 +4,7 @@ class Task < ApplicationRecord
   scope :timelimit_order, -> { order(timelimit: :asc) }
   scope :priority_order, -> { order(priority: :asc) }
   scope :title_search, -> (title) {
-    where("title Like ?", title)
+    where("title Like ?", "%#{title}%")
   }
   scope :status_search, -> (status) { where(status: status)}
   enum priority:{
