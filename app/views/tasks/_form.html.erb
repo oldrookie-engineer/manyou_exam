@@ -9,6 +9,7 @@
       </ul>
     </div>
   <% end %>
+
   <dl>
   <div class="task_title">
     <dt><%= form.label :title %></dt>
@@ -30,7 +31,13 @@
     <dt><%= form.label :priority %></dt>
     <dd><%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %></dd>
   </div>
-  </dl>
+</dl>
+<div class="task_label">
+    <% Label.all.each do |label|%>
+      <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+      <label style="background-color: aquamarine"><%= label.name %></label>
+    <% end %>
+  </div>    
   <%= form.submit %>
 <% end %>
 <%= link_to '一覧画面', tasks_path, class: 'btn btn-primary' %>

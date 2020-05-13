@@ -14,5 +14,7 @@ class Task < ApplicationRecord
   }
   belongs_to :user
   has_many :labellings, dependent: :destroy
-  has_many :labelling_labels, through: :labellings, source: :label
+  has_many :labels, through: :labellings, source: :label
 end
+
+# , add_foreign_key: 'task_id'

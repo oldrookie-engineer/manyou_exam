@@ -34,6 +34,13 @@ class TasksController < ApplicationController
         end
       end
     end
+
+    # if current_user.present?
+    #   if current_user.labbelings
+    #     labbelings =
+    #   end
+    # end
+
   end
 
   def new
@@ -51,6 +58,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    # @labbeling = current_user.labbelings.find_by(task_id: @task.id)
   end
 
   def edit
@@ -71,7 +79,8 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :timelimit, :status, :priority)
+    params.require(:task).permit(:title, :content, :timelimit, :status, :priority, label_ids: [])
+    # params.require(:task).permit(:title, :content, :timelimit, :status, :priority, label_attributes:[ :label_ids[] ])
   end
 
   def set_task

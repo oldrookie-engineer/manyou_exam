@@ -4,9 +4,13 @@
 #   password_digest: 'lovenakano'
 # )
 
-User.create!(
-  name: "master",
-  email: "1234@abcd.com",
-  password: "yohei",
-  password_confirmation: "yohei",
-  admin: true)
+# User.create!(
+#   name: "master",
+#   email: "1234@abcd.com",
+#   password: "yohei",
+#   password_confirmation: "yohei",
+#   admin: true)
+
+10.times do |n|
+  Label.create!(name:"label: #{n}")
+end
