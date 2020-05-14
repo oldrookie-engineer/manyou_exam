@@ -4,6 +4,8 @@
     <%= form.text_field :title %>
     <%= form.label :status, :状態検索 %>
     <%= form.select :status, [[""],["未着手"],["着手中"],["完了"]] %>
+    <%= form.label :status, :ラベル検索 %>    
+    <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true}) %>
     <%= form.hidden_field :search, value: 'true' %>
     <%= form.submit '検索' %>
 <% end %>

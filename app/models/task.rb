@@ -7,6 +7,7 @@ class Task < ApplicationRecord
     where("title Like ?", "%#{title}%")
   }
   scope :status_search, -> (status) { where(status: status)}
+  # scope :label_search, -> (label_id) { where(id: label_id)}
   enum priority:{
     高: 0,
     中: 1,
@@ -16,5 +17,3 @@ class Task < ApplicationRecord
   has_many :labellings, dependent: :destroy
   has_many :labels, through: :labellings, source: :label
 end
-
-# , add_foreign_key: 'task_id'
