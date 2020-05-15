@@ -19,7 +19,7 @@ end
     content: "万葉step1",
     status: "完了",
     priority: "高",
-    timelimit: 2020-05-08,
+    timelimit: "2020-05-08",
     user_id:1
   )
 
@@ -28,7 +28,7 @@ end
     content: "万葉step2",
     status: "着手中",
     priority: "高",
-    timelimit: 2020-05-10,
+    timelimit: "2020-05-10",
     user_id:2
   )
 
@@ -37,7 +37,7 @@ end
     content: "万葉step3",
     status: "未着手",
     priority: "高",
-    timelimit: 2020-05-15,
+    timelimit: "2020-05-15",
     user_id:3
   )
 
