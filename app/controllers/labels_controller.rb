@@ -10,11 +10,11 @@ class LabelsController < ApplicationController
 
   def create
     @label = Label.new(label_params)
-    if @label.save
-      redirect_to tasks_path, notice: 'ラベルを作成しました！'
-    else
-      render :new
-    end
+      if @label.save
+        redirect_to new_task_path, notice: 'ラベルを作成しました！'
+      else
+        render :new
+      end
   end
 
   def show

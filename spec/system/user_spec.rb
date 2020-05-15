@@ -15,6 +15,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'user[password]', with: '00000000'
         fill_in 'user[password_confirmation]', with: '00000000'
         click_on '登録する'
+        sleep 2.0
         expect(page).to have_content 'ユーザー登録しました！'
         # expect(current_path).to eq user_path(@user.id)
       end
@@ -35,6 +36,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'session[email]', with: @user.email
         fill_in 'session[password]', with: @user.password
         click_on 'ログインする'
+        sleep 2.0
         expect(page).to have_content 'ログインしました！'
       end
     end
@@ -45,6 +47,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'session[email]', with: @user.email
         fill_in 'session[password]', with: @user.password
         click_on 'ログインする'
+        sleep 2.0
       end
 
       it '自分のマイページに飛べる' do
@@ -69,6 +72,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'session[email]', with: @admin_user.email
         fill_in 'session[password]', with: @admin_user.password
         click_on 'ログインする'
+        sleep 2.0
       end
 
       it '管理画面にアクセスできる' do
@@ -84,6 +88,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'session[email]', with: @user.email
         fill_in 'session[password]', with: @user.password
         click_on 'ログインする'
+        sleep 2.0
       end
 
       it '一般ユーザーは管理画面にアクセスできない' do
@@ -99,6 +104,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'session[email]', with: @admin_user.email
         fill_in 'session[password]', with: @admin_user.password
         click_on 'ログインする'
+        sleep 2.0
       end
 
       it 'ユーザーを新規登録できる' do
@@ -108,6 +114,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         fill_in 'user[password]', with: 'nakano'
         fill_in 'user[password_confirmation]', with: 'nakano'
         click_on '登録する'
+        sleep 2.0
         expect(page).to have_content 'ユーザーを登録しました！'
       end
 
@@ -120,6 +127,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能', type: :
         visit edit_admin_user_path(id: @user.id)
         fill_in 'user[name]', with: 'edit'
         click_on '更新する'
+        sleep 2.0
         expect(page).to have_content 'ユーザーを編集しました！'
       end
 

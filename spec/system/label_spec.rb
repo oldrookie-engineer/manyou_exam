@@ -42,4 +42,29 @@ RSpec.describe 'ラベル管理機能', type: :system do
       end
     end
   end
+  describe 'ラベル登録画面' do
+    context '必要項目を入力して、createボタンを押した場合' do
+      it 'ラベルの登録ができる' do
+        visit new_label_path
+        fill_in 'label[name]', with: 'my label'
+        sleep 2.0
+        click_on '登録する'
+        sleep 2.0
+        expect(page).to have_content 'my label'
+      end
+    end
+  end
+  describe 'タスク編集画面' do
+    context 'タスクを編集する場合' do
+      it 'ラベルの編集ができる' do
+        visit edit_task_path(@task)
+        page.uncheck 'task[label_ids][]', match: :first
+        find(:xpath, "(//input[@type='checkbox'])[4]").click
+        sleep 1.0
+        click_on '更新する'
+        sleep 2.0
+        expect(page).to have_content "label:4"
+      end
+    end
+  end
 end

@@ -1,6 +1,6 @@
 <h1>ラベル登録</h1>
 <%= form_with(model: @label, local: true) do |f| %>
   <%= f.label :名前 %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, class: 'mylabel' %>
   <%= f.submit %>
 <% end %>

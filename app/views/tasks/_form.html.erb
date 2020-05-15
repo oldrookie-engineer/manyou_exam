@@ -33,7 +33,8 @@
   <div class="task_label">
     <dt><%= form.label :ラベル %></dt>
     <%= form_for @task do |form| %>
-      <dd><%= form.collection_check_boxes :label_ids, Label.all, :id, :name %></dd>
+      <dd><%= form.collection_check_boxes :label_ids, Label.all, :id, :name%></dd>
+      <%= link_to 'ラベル登録へ', new_label_path%><br><br>
       <%= form.submit %>
     <% end %>
   </div>
