@@ -8,7 +8,7 @@ User.create!(
 10.times do |n|
   User.create!(
     name: "test#{n}",
-    email: "example#{n}@example.com",
+    email: "example#{n}@dic.com",
     password: "password#{n}",
     password_digest: "password#{n}"
   )
