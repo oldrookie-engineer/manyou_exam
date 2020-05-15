@@ -14,3 +14,7 @@
 10.times do |n|
   Label.create!(name:"label: #{n}")
 end
+
+# 20.times do |n|
+#   name = Faker::Name.name
+#   email = "example-#{n+1}@example.com"
