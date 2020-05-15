@@ -31,6 +31,8 @@ class TasksController < ApplicationController
         elsif params[:status].present?
           @tasks = current_user.tasks.status_search(params[:status])
           @tasks = @tasks.page(params[:page]).per(5)
+        elsif params[:label_id].present?
+          @tasks = current_user.tasks.includes(:labels).where(labellings: {label_id: params[:label_id]}).references(:labels).page(params[:page]).per(5)
         end
       end
     end
@@ -51,6 +53,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    # @labbeling = current_user.labbelings.find_by(task_id: @task.id)
   end
 
   def edit
@@ -71,7 +74,8 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :timelimit, :status, :priority)
+    params.require(:task).permit(:title, :content, :timelimit, :status, :priority, label_ids: [])
+    # params.require(:task).permit(:title, :content, :timelimit, :status, :priority, label_attributes:[ :label_ids[] ])
   end
 
   def set_task

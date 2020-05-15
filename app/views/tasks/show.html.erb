@@ -9,4 +9,9 @@
   <dd><%= @task.status %></dd>
   <dt>優先順位</dt>
   <dd><%= @task.priority %></dd>
+  <dt>ラベル</dt>
+  <dd><% @task.labels.each do |label| %>
+      <%= label.name %>
+      <% end %>
+  </dd>
 <%= link_to '一覧画面', tasks_path, class: 'btn btn-primary' %>

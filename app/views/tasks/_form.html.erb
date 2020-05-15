@@ -30,7 +30,14 @@
     <dt><%= form.label :priority %></dt>
     <dd><%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %></dd>
   </div>
+  <div class="task_label">
+    <dt><%= form.label :ラベル %></dt>
+    <%= form_for @task do |form| %>
+      <dd><%= form.collection_check_boxes :label_ids, Label.all, :id, :name%></dd>
+      <%= link_to 'ラベル登録へ', new_label_path%><br><br>
+      <%= form.submit %>
+    <% end %>
+  </div>
   </dl>
-  <%= form.submit %>
 <% end %>
 <%= link_to '一覧画面', tasks_path, class: 'btn btn-primary' %>

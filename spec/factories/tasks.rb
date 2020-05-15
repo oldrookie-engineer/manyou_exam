@@ -6,6 +6,10 @@ FactoryBot.define do
     status { '未着手' }
     priority { '高' }
     user
+      after(:build) do |task|
+        label = create(:label)
+        task.labellings << build(:labelling, task: task, label: label)
+      end
   end
   factory :second_task, class: Task do
     title { 'タスク１' }
@@ -14,6 +18,10 @@ FactoryBot.define do
     status { '着手中' }
     priority { '中' }
     user
+    after(:build) do |task|
+      label = create(:label, name: 'label:2')
+      task.labellings << build(:labelling, task: task, label: label)
+    end
   end
   factory :third_task, class: Task do
     title { 'タスク３' }
