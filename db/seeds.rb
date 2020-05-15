@@ -1,6 +1,6 @@
 User.create!(
   name: "master",
-  email: "123@abc.com",
+  email: "12@ab.com",
   password: "adminmaster",
   password_confirmation: "adminmaster",
   admin: true)
@@ -8,7 +8,7 @@ User.create!(
 10.times do |n|
   User.create!(
     name: "test#{n}",
-    email: "example#{n}@dic.com",
+    email: "example#{n}@test.com",
     password: "password#{n}",
     password_digest: "password#{n}"
   )
